@@ -34,7 +34,7 @@ class Project
 			outFile = $apacheConfigDir + @name + '.conf'
 			self.backupApacheConfig
 			File.open(outFile, 'w') do |out|
-				out << File.open(inFile).read.gsub(/{{name}}/, @name).gsub(/{{webroot}}/, $webroot)
+				out << File.open(inFile).read.gsub(/{{name}}/, @name).gsub(/{{webroot}}/, $projectsFolder)
 			end
 			puts "Apache site config generated".green
 			`a2ensite #{@name}.conf && service apache2 reload`
