@@ -1,0 +1,1 @@
+Host & Apache config files will be stored here when creating projects.

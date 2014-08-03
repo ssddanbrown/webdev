@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+require 'fileutils'
+require_relative 'lib/project'
+
+dir = File.dirname(__FILE__)
+$lib = dir + '/lib/'
+$backupDir = dir + '/backup/'
+$templateDir = dir + '/templates/'
+
+# Config
+$webroot = '/home/dan/www'	# The location of your project folders
+$hosts = '/etc/hosts'		# Location of the systems host file
+$apacheConfigDir = '/etc/apache2/sites-available/' # Apache sites location
+
+# Log Function
+class String
+	def colorize(color_code)
+	  "\e[#{color_code}m#{self}\e[0m"
+	end
+	def red; colorize(31); end
+	def green; colorize(32); end
+end
+
+# Command Line Variables
+action = ARGV[0]
+name = ARGV[1]
+template = ARGV[2] ? ARGV[2] : 'default'
+
+case action
+when 'create'
+	project = Project.new(name)
+	project.create(template)
+when 'remove'
+	project = Project.new(name)
+	project.remove
+when 'help'
+	File.open($lib+'help.txt').each do |line|
+		puts line
+	end
+else
+	puts "An action is required, View the help by using the 'webdev help' command".red
+end
+	
