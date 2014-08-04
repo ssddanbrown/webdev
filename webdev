@@ -3,7 +3,7 @@ require 'fileutils'
 require_relative 'lib/project'
 require_relative 'config'
 
-dir = File.dirname(__FILE__)
+dir = File.symlink?(__FILE__) ? File.dirname(File.readlink(__FILE__)) : File.dirname(__FILE__)
 $fullDir = File.expand_path dir
 $lib = dir + '/lib/'
 $backupDir = dir + '/backup/'

@@ -58,14 +58,14 @@ class Project
 
 	def backupApacheConfig
 		if File.exists?("#{$apacheConfigDir}/#{@name}.conf")
-			FileUtils.cp "#{$apacheConfigDir}/#{@name}.conf", $backupDir + "#{@name}.conf.backup"
+			FileUtils.cp("#{$apacheConfigDir}/#{@name}.conf", $backupDir + "#{@name}.conf.backup")
 		end
 	end
 
 	def backupHosts
 		if File.exists?($hosts)
 			backup = $backupDir + 'hosts.backup'
-			FileUtils.cp $hosts, backup
+			FileUtils.cp($hosts, backup)
 			puts "Hosts file backed-up at #{backup}".green
 			true
 		else
@@ -98,13 +98,15 @@ class Project
 	end
 
 	def removeApacheConfig
-		config = $apacheConfigDir + @name + '.conf'
+		config = "#{$apacheConfigDir}/#{@name}.conf"
 		if File.writable?(config)
 			`a2dissite #{@name}.conf && service apache2 reload`
 			File.delete(config)
 			puts "Site config delted and apache refreshed".green
-		else
+		elsif File.exists?(config)
 			puts "Apaches site config not writable".red
+		else
+			puts "Apache config located at #{config} does not exists".red
 		end
 	end
 

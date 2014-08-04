@@ -24,6 +24,10 @@ $ webdev remove {name}
 ----------------------------------
 Removes apache and hosts entry for {name}
 
+$ webdev export
+---------------------------------
+Exports webdev to the $exportFolder so the command can be used from anywhere.
+
 $ webdev help
 ---------------------------------
 Shows this help page
