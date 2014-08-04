@@ -4,6 +4,7 @@ require_relative 'lib/project'
 require_relative 'config'
 
 dir = File.dirname(__FILE__)
+$fullDir = File.expand_path dir
 $lib = dir + '/lib/'
 $backupDir = dir + '/backup/'
 $templateDir = dir + '/templates/'
@@ -19,16 +20,24 @@ end
 
 # Command Line Variables
 action = ARGV[0]
-name = ARGV[1]
-template = ARGV[2] ? ARGV[2] : 'default'
 
 case action
 when 'create'
+	name = ARGV[1]
+	template = ARGV[2] ? ARGV[2] : 'default'
 	project = Project.new(name)
 	project.create(template)
 when 'remove'
+	name = ARGV[1]
 	project = Project.new(name)
 	project.remove
+when 'export'
+	if File.writable? $exportFolder
+		FileUtils.ln_s $fullDir+'/webdev', $exportFolder + '/webdev'
+		puts "webdev command exported".green
+	else
+		puts "Export folder not writable, Try again with root permissions".red
+	end
 when 'help'
 	File.open($lib+'help.txt').each do |line|
 		puts line

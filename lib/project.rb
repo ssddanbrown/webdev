@@ -31,7 +31,7 @@ class Project
 					exit
 				end
 			end
-			outFile = $apacheConfigDir + @name + '.conf'
+			outFile = "#{$apacheConfigDir}/#{@name}.conf"
 			self.backupApacheConfig
 			File.open(outFile, 'w') do |out|
 				out << File.open(inFile).read.gsub(/{{name}}/, @name).gsub(/{{webroot}}/, $projectsFolder)
@@ -57,8 +57,8 @@ class Project
 	end
 
 	def backupApacheConfig
-		if File.exists?($apacheConfigDir+@name+'.conf')
-			FileUtils.cp $apacheConfigDir+@name+'.conf', $backupDir + "#{@name}.conf.backup"
+		if File.exists?("#{$apacheConfigDir}/#{@name}.conf")
+			FileUtils.cp "#{$apacheConfigDir}/#{@name}.conf", $backupDir + "#{@name}.conf.backup"
 		end
 	end
 

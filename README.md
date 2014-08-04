@@ -42,4 +42,9 @@ Look at the supplied templates as an example of using these variables.
 * `$ webdev create {name}` Creates apache configrations and hosts entries so that `www.{name}.dev` and `{name}.dev` point to the `{name}` folder in your configured projects folder.
 *  `$ webdev create {name} {template}` Does the same as the above command but will use the specified template file. *Do not type the '.conf' extensionfor this command.*
 *  `$ webdev remove {name}` Removes apache and hosts entry for `{name}`.
+*  `$ wedev export` Export `webdev` to the `$exportFolder` so the command can be used from anywhere.
 *  `$ webdev help` Shown help page with available commands.
+
+## Notes
+
+I have developed this script on Ubuntu 14.04 so many of the configurations may be out for your operating system and some functions may not even work. Please let me know if you have any issues or create a pull request with fixes. 
