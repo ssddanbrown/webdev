@@ -1,4 +1,4 @@
-#Webdev
+# Webdev
 
 Ruby script for setting up new LAMP projects
 
@@ -42,6 +42,8 @@ Look at the supplied templates as an example of using these variables.
 * `$ webdev create {name}` Creates apache configrations and hosts entries so that `www.{name}.dev` and `{name}.dev` point to the `{name}` folder in your configured projects folder.
 *  `$ webdev create {name} {template}` Does the same as the above command but will use the specified template file. *Do not type the '.conf' extensionfor this command.*
 *  `$ webdev remove {name}` Removes apache and hosts entry for `{name}`.
+*  `$ webdev hosts-add {name}` Adds entries to your hosts file for `{name}.dev` and `www.{name}.dev`.
+*  `$ webdev hosts-remove {name}` Removes entries for your project that are specified within the hosts file. 
 *  `$ wedev export` Exports `webdev` to the `$exportFolder` so the command can be used from anywhere.
 *  `$ webdev help` Shown help page with available commands.
 

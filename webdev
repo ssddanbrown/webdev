@@ -38,10 +38,20 @@ when 'export'
 	else
 		puts "Export folder not writable, Try again with root permissions".red
 	end
+when 'hosts-add'
+  name = ARGV[1];
+  project = Project.new(name)
+  project.addToHosts
+when 'hosts-remove'
+  name = ARGV[1];
+  project = Project.new(name)
+  project.removeFromHosts
+when 'test'
+  name = ARGV[1];
+  project = Project.new(name)
+  puts project.name.green
 when 'help'
-	File.open($lib+'help.txt').each do |line|
-		puts line
-	end
+	File.open(dir+'/README.md').each { |line| puts line }
 else
 	puts "An action is required, View the help by using the 'webdev help' command".red
 end

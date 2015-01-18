@@ -5,6 +5,8 @@ class Project
 		self.checkName
 	end
 
+  def name; @name; end;
+
 	def checkName
 		if !@name
 			puts "No Name Provided".red
@@ -44,6 +46,18 @@ class Project
 	end
 
 	def addToHosts
+    if File.readable?($hosts)
+      contents = File.read($hosts)
+      match_in_file = contents.match(/[0-9.:]*.*#{Regexp.escape(@name)}\.dev.*/)
+      if match_in_file
+        puts "Project name already in hosts file on the following line:".red
+        puts match_in_file
+        return
+      end
+    else
+      puts "Hosts file not readable".red
+      return
+    end
 		backedUp = self.backupHosts
 		if backedUp && File.writable?($hosts)
 			File.open($hosts, 'a') do |hosts|
@@ -83,11 +97,18 @@ class Project
 		backedUp = self.backupHosts
 		if backedUp && File.writable?($hosts)
 			temp = File.open($hosts + '.temp', 'a')
+
 			File.open($hosts, 'r').each do |line|
-				if !line.include? "#{@name}.dev www.#{@name}.dev"
+				if !line.include?("#{@name}.dev www.#{@name}.dev")
 					temp.puts(line)
+        else
+          newline = line.gsub("#{@name}.dev www.#{@name}.dev", '')
+          if !newline.match(/^\s*[0-9.:]*\s*\Z/)
+            temp.puts(newline) 
+          end
 				end
 			end
+      
 			temp.close
 			File.delete($hosts)
 			FileUtils.mv($hosts+'.temp', $hosts)
